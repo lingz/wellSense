@@ -1,4 +1,4 @@
 Meteor.Router.add
   "/": "home"
-  "/one": "one"
+  "/graph": "graph"
   "/two": "two"
