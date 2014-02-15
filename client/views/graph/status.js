@@ -22,5 +22,14 @@ Template.status.helpers({
       }
       return result;
     }
+  },
+  activeWell: function() {
+    //var activeWellCode = Session.get("activeWell");
+    var activeWellCode = Session.get("activeWell");
+    if (activeWellCode) {
+      return Wells.findOne({shortcode: activeWellCode});
+    } else {
+      return null;
+    }
   }
 });

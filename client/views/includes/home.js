@@ -8,9 +8,20 @@ Template.home.rendered = function() {
   }
 };
 
+window.mainMarkers = null;
 function createMainMap() {
-  mainMarkers = generateMap("main-map-canvas", function(marker) {
+  result = generateMap("main-map-canvas", function(marker) {
     Meteor.Router.to("/well/" + marker.title);
-  })[1];
-  console.log(mainMarkers);
+    changeMarker(marker.title, true);
+  });
+  if (result) mainMarkers = result.markers;
 }
+Deps.autorun(function() {
+  var latestReport = Reports.findOne({}, {sort: {timestamp: -1}});
+  if (latestReport) {
+    var latestWell = Wells.findOne({shortcode: latestReport.wellCode});
+    if (latestWell) {
+      changeMarker(latestWell.shortcode);
+    }
+  }
+});

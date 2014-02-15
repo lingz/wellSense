@@ -1,3 +1,5 @@
 <template name="status">
+  {{#with activeWell}}
   <div id="status">{{name}} was last used {{lastUsed}} ago</div>
+  {{/with}}
 </template>

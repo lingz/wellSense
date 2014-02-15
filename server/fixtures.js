@@ -114,7 +114,6 @@ function seed() {
     var start = moment().subtract(3, "months").startOf("day");
     var now = moment();
     var wellcodes = Wells.find().map(function(well){ return well.shortcode;});
-    console.log(wellcodes);
     seedBetween(wellcodes, start, now);
   }
 }
@@ -122,7 +121,6 @@ seed();
 
 Meteor.methods({
   reseed: function() {
-    console.log("Reseed called");
     Wells.remove({});
     Reports.remove({});
     seed();
@@ -130,8 +128,13 @@ Meteor.methods({
   extendSeed: function() {
     var lastReports = Meteor.call("mostRecent");
     for (var shortcode in lastReports) {
-      var start = moment(lastReports[shortcode]);
-      if (!start) start = moment().subtract(3, "months");
+      var start;
+      if (!lastReports[shortcode]) {
+        start = moment().subtract(3, "months");
+      } else {
+        start = moment(lastReports[shortcode]);
+      }
+        
       var end = moment();
       seedBetween([shortcode], start, end);
     }
@@ -145,7 +148,7 @@ function seedBetween(wellcodes, begin, end) {
     var offsets = [0.2, 0.4, 0.6, 0.8, 0.9, 1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4];
     // Make a random number between one and one hundred as a coefficient for the
     // popularity of the well generally
-    var historicalAverage = Math.floor(Math.random() * 25);
+    var historicalAverage = Math.floor(Math.random() * 25 + 20);
     // make a std for this type of well from the historical average
     var stdDev = Math.random() *  historicalAverage * 0.5;
     var offset = 0;

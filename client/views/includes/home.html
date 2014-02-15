@@ -1,7 +1,13 @@
 <template name="home">
     <h1>Well Sense</h1>
+    {{#isolate}}
     <div id="main-map-canvas" class="map-canvas"></div>
+    {{/isolate}}
     <div id="wellInfo">
+      {{> status}}
+      {{#isolate}}
+        {{> graph}}
+      {{/isolate}}
     {{> wellInfo}}
     </div>
 </template>
