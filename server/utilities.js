@@ -1,12 +1,19 @@
 Meteor.methods({
   mostRecent: function() {
+    console.log("Calling most recent");
     var wellcodes = Wells.find().map(function(well){ return well.shortcode;});
     result = {};
     for (var i=0; i < wellcodes.length; i++) {
       var activeCode = wellcodes[i];
       mostRecent = Reports.findOne({wellCode: activeCode}, {sort: {timestamp: -1}});
-      result[activeCode] = mostRecent.timestamp;
+      if (mostRecent) {
+        result[activeCode] = mostRecent.timestamp;
+      } else {
+        result[activeCode] = null;
+      }
+      
     }
+    console.log(result);
     return result;
   },
   //start day comes in as Time() object

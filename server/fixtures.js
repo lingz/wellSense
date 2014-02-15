@@ -114,6 +114,7 @@ function seed() {
     var start = moment().subtract(3, "months").startOf("day");
     var now = moment();
     var wellcodes = Wells.find().map(function(well){ return well.shortcode;});
+    console.log(wellcodes);
     seedBetween(wellcodes, start, now);
   }
 }
@@ -150,25 +151,26 @@ function seedBetween(wellcodes, begin, end) {
     var offset = 0;
     var currentWell = wellcodes[j];
     console.log("j = " + j);
-    while (begin < end) {
+    currentTime = begin.clone();
+    while (currentTime < end) {
       // Multiply by the offset to get the current standard deviation
       var baseMean = historicalAverage * offsets[offset];
       var baseStdDev = stdDev * offsets[offset];
       // the number of wells that are to be generated in this time block
       var wellUseCount = Math.abs(rnd(baseMean, baseStdDev));
-      var endTime = begin.clone().add(2, "hours").subtract(1, "minute");
+      var endTime = currentTime.clone().add(2, "hours").subtract(1, "minute");
       if (endTime > end) endTime = end;
       // seconds difference between end and start time
-      var diff = endTime.diff(begin, "seconds");
+      var diff = endTime.diff(currentTime, "seconds");
       for (var reportNum = 0; reportNum < wellUseCount; reportNum++) {
-        var timestamp = begin.clone().add(Math.random() * diff, "seconds");
+        var timestamp = currentTime.clone().add(Math.random() * diff, "seconds");
         Reports.insert({
           timestamp: timestamp.toDate(),
           wellCode: currentWell
         });
       }
       // increment current time by 2 hours
-      begin.add(2, "hours");
+      currentTime.add(2, "hours");
       offset++;
       offset %= 12;
     }
