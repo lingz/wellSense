@@ -1,3 +1,7 @@
+Session.setDefault("now", new Date());
+setInterval(function() {
+  Session.set("now", new Date());
+}, 1000);
 Template.status.helpers({
   name: function() {
     return this.name;
@@ -8,7 +12,7 @@ Template.status.helpers({
     if (reportDict)
       lastReport = reportDict[Session.get("activeWell")];
     if (lastReport) {
-      var now = moment();
+      var now = moment(Session.get("now"));
       var diff = now.diff(moment(lastReport), "seconds");
       var result;
       if (diff < 61) {
@@ -33,3 +37,4 @@ Template.status.helpers({
     }
   }
 });
+

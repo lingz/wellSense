@@ -19,7 +19,9 @@ window.generateMap = function(elementId, markerCallback) {
 
   // place the existing wells on the map
   // the latest marker
-  var latestWellCode = Reports.findOne().wellCode;
+  var latestReport = Reports.findOne();
+  if (!latestReport) return;
+  var latestWellCode = latestReport.wellCode;
   
   var existingWells = Wells.find().fetch();
   var activeWell = Session.get("activeWell");
@@ -70,7 +72,9 @@ window.generateMap = function(elementId, markerCallback) {
 
 window.changeMarker = function(wellCode, isActive) {
   if (mainMarkers) {
+    console.log(wellCode);
     var well = Wells.findOne({shortcode: wellCode});
+    console.log(well);
     var activeWell = Session.get("activeWell");
     var latestWellCode = Reports.findOne({}, {sort: {timestamp: -1}}).wellCode;
     var marker = mainMarkers[wellCode];
