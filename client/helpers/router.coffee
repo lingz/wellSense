@@ -5,3 +5,4 @@ Meteor.Router.add
   "/well/:wellCode": (wellCode)->
     Session.set("activeWell", wellCode)
     return "home"
+  "/tester": "tester"

@@ -17,7 +17,7 @@ function seed() {
         shortcode: "UW12",
         lng: 44.055991,
         lat: 13.565088,
-        ph: seedPhoneNumbers[0]
+        ph: "+971563192099"
       },
       {
         name: "Old City Well",
@@ -104,6 +104,7 @@ function seed() {
       }
     ];
     for (var i=0; i< demoWells.length; i++) {
+      demoWells[i].subscribers = [];
       demoWells[i].status = "working";
       Wells.insert(demoWells[i]);
     }

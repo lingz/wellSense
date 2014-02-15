@@ -9,6 +9,7 @@ Template.home.rendered = function() {
 };
 
 window.mainMarkers = null;
+window.changeMarker = null;
 function createMainMap() {
   result = generateMap("main-map-canvas", function(marker) {
     Meteor.Router.to("/well/" + marker.title);
@@ -23,5 +24,14 @@ Deps.autorun(function() {
     if (latestWell) {
       changeMarker(latestWell.shortcode);
     }
+  }
+});
+
+// on well change, redo all wells
+Deps.autorun(function() {
+  if (changeMarker) {
+    Wells.find({}).forEach(function(well) {
+      changeMarker(well);
+    });
   }
 });
