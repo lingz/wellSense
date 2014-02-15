@@ -162,3 +162,9 @@ Meteor.methods({
     seed();
   }
 });
+
+Meteor.methods({
+  selectaDay: function(wellID, day) {
+    
+  } 
+})
