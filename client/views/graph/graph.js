@@ -1,6 +1,7 @@
 
 Template.graph.rendered = function() {
   console.log("Hello");
+<<<<<<< HEAD
   if ($('#chart_div').length > 0) {
   	if (isLoaded) {
   		drawChart();
@@ -8,6 +9,9 @@ Template.graph.rendered = function() {
   		google.setOnLoadCallback(drawChart);
   	}  	
   }
+=======
+  var dataWeek = [];
+>>>>>>> 16dfb24e40a018c42b031d818400aab01ee48d69
 };
 
 function drawChart() {

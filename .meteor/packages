@@ -8,6 +8,5 @@ preserve-inputs
 router
 userErrors
 coffeescript
-autopublish
 insecure
 moment
