@@ -175,4 +175,3 @@ function seedBetween(wellcodes, begin, end) {
   }
 
 }
-
