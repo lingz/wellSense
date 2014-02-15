@@ -49,8 +49,32 @@ Meteor.Router.add("/sms/subscribe", "GET", function() {
    well.name + " (" +well.shortcode + ")." ];
 });
 
+var URL = "http://wellsense.ngrok.com/";
 Meteor.methods({
   "sendSMS": function(recipients, message) {
+    this.unblock();
+    for (var i=0; i < recipients.length; i ++) {
+      var phoneNumber = recipients[i];
+      HTTP.get(URL + "/cgi-bin/sendsms", {
+        params: {
+          username: "tester",
+          password: "foobar",
+          to: phoneNumber,
+          text: message
+        }
+      }, function(err, result) {
+        if (err) {
+          console.log("SMS server error");
+        } else {
+          console.log("SMS server replied");
+          console.log(result.data);
+        }
+      });
+    }
   }
+});
+
+Meteor.Router.add("/sms/check", "GET", function() {
+  
 });
 
