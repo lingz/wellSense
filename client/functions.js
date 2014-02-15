@@ -5,7 +5,7 @@ window.generateMap = function(elementId, markerCallback) {
   if (element.hasClass("rendered")) return;
   var mapOptions = {
     zoom: 12,
-    center: new google.maps.LatLng(15.360715, 44.178987),
+    center: new google.maps.LatLng(13.565088, 44.055991),
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
 
