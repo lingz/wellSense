@@ -140,7 +140,7 @@ function seed() {
           console.log(timestamp.format("dddd, MMMM Do YYYY, h:mm:ss a"));
           Reports.insert({
             timestamp: timestamp.toDate(),
-            wellShortcode: currentWell.shortcode
+            wellCode: currentWell.shortcode
           });
         }
         // increment current time by 2 hours
