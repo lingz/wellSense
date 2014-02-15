@@ -1,5 +1,8 @@
 <template name="status">
   {{#with activeWell}}
-  <div id="status">{{name}} was last used {{lastUsed}} ago</div>
+  <div class="info-background" id="status-group">
+    <div id="status-name">{{name}} was last used</div>
+    <div id = "status-time">{{lastUsed}} ago</div>
+  </div>
   {{/with}}
 </template>

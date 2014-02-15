@@ -1,13 +1,14 @@
 <template name="home">
-    <h1>Well Sense</h1>
+	<div id='logo'><img src='/wellSenseLogoSmall.png'></img></div>
+    <h1 id='wellSense-title'>wellSense</h1>
     {{#isolate}}
     <div id="main-map-canvas" class="map-canvas"></div>
     {{/isolate}}
     <div id="wellInfo">
-      {{> status}}
-      {{#isolate}}
-        {{> graph}}
-      {{/isolate}}
+    {{> status}}
+    {{#isolate}}
+ 	{{> graph}}
+ 	{{/isolate}}
     {{> wellInfo}}
     </div>
 </template>
