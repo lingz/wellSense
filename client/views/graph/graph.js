@@ -1,23 +1,30 @@
 var chart;
 var latestPicker;
-Session.setDefault("activeDate", new Date());
+Session.setDefault("activeDate", moment().startOf("day").toDate());
+
+Template.graph.created = function() {
+  if (isLoaded) {
+    setupFunctions();
+  } else {
+    google.setOnLoadCallback(function() {
+      setupFunctions();
+    });
+  }   
+};
 
 Template.graph.rendered = function() {
   
   var drawToday = function() {
-    console.log("draw today started");
     chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
     Meteor.call('selectADay', Session.get("activeWell"), Session.get("activeDate"), function(err, dataResponse){
       drawChart(dataResponse);
     });
     if ($("#datepicker").length > 0 && !$("#datepicker").hasClass("rendered")) {
       if (latestPicker) latestPicker.destroy();
-      console.log("creating a picker");
       latestPicker = new Pikaday({
         field: $('#datepicker')[0],
         format: 'D MMM YYYY',
         onSelect: function() {
-          console.log(this);
           Session.set("activeDate", this.getMoment().toDate());
       }});
       $("#datepicker").addClass("rendered");
@@ -28,15 +35,13 @@ Template.graph.rendered = function() {
       drawToday();
     } else {
       google.setOnLoadCallback(function() {
+        setupFunctions();
         drawToday();
       });
     }   
   }
 };
 
-Template.graph.created = function() {
-  setupFunctions();
-};
 
 function setupFunctions() {
   var drawChart = function(dataResponse) {
@@ -60,10 +65,8 @@ function setupFunctions() {
 
   window.drawChart = drawChart;
   Deps.autorun(function() {
-    console.log("recomputing data");
     var inspectingDate = Session.get("activeDate");
     Meteor.call('selectADay', Session.get("activeWell"), inspectingDate, function(err, dataResponse){
-      console.log(dataResponse);
       drawChart(dataResponse);
     });
   });
