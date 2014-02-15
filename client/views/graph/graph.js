@@ -1,4 +1,3 @@
-
 Template.graph.rendered = function() {
   console.log("Hello");
   if ($('#chart_div').length > 0) {
@@ -8,7 +7,13 @@ Template.graph.rendered = function() {
   		google.setOnLoadCallback(drawChart);
   	}  	
   }
+  var picker = new Pikaday({ field: $('#datepicker')[0] });
 };
+
+
+Meteor.call('selectADay', function(dataResponse){
+})
+
 
 
 

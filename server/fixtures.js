@@ -164,7 +164,32 @@ Meteor.methods({
 });
 
 Meteor.methods({
-  selectaDay: function(wellID, day) {
-    
-  } 
-})
+  //start day comes in as Time() object
+  selectADay: function(wellID, startDay) {
+    var endDay = moment(startDay).clone().add('days', 1).toDate();
+    var todayWells = Reports.find({wellShortcode: wellID, timestamp: {"$gte": startDay, "$lt": endDay}}, {fields: {timestamp: 1}}).fetch();
+    //maps to an array with only timestamps
+    todayWells = todayWells.map(function(report){
+      return report.timestamp;
+    });
+    console.log(todayWells);
+    var frequency = 0;
+    var frequencyDict = new Object();
+    //Start day should not have hour associated
+    var startTime = moment(startDay).clone().toDate();
+    var endTime = moment(startTime).clone().add('hours', 2).toDate();
+    for (var i=0; i<todayWells.length;i++){
+      if (todayWells[i] > startTime && todayWells[i] < endTime){
+        frequency++;
+      } else {
+        frequencyDict[startTime] = frequency;
+        frequency = 0;
+        startTime = moment(startTime).add('hours', 2).toDate();
+        endTime = moment(endTime).add('hours', 2).toDate();
+      }
+    }
+    //push last frequency
+    frequencyDict[startTime] = frequency;
+    return frequencyDict;
+  }
+});
