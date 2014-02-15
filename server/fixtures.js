@@ -172,9 +172,9 @@ Meteor.methods({
     todayWells = todayWells.map(function(report){
       return report.timestamp;
     });
-    console.log(todayWells);
     var frequency = 0;
     var frequencyDict = new Object();
+    var dictKey = 0;
     //Start day should not have hour associated
     var startTime = moment(startDay).clone().toDate();
     var endTime = moment(startTime).clone().add('hours', 2).toDate();
@@ -182,14 +182,16 @@ Meteor.methods({
       if (todayWells[i] > startTime && todayWells[i] < endTime){
         frequency++;
       } else {
-        frequencyDict[startTime] = frequency;
+        frequencyDict[dictKey] = frequency;
+        dictKey+= 2;
         frequency = 0;
         startTime = moment(startTime).add('hours', 2).toDate();
         endTime = moment(endTime).add('hours', 2).toDate();
       }
     }
     //push last frequency
-    frequencyDict[startTime] = frequency;
+    frequencyDict[dictKey] = frequency;
+    console.log(frequencyDict);
     return frequencyDict;
   }
 });

@@ -1,38 +1,50 @@
+var chart;
+
 Template.graph.rendered = function() {
-  console.log("Hello");
-  if ($('#chart_div').length > 0) {
-  	if (isLoaded) {
-  		drawChart();
-  	} else {
-  		google.setOnLoadCallback(drawChart);
-  	}  	
+  
+  var drawToday = function() {
+    chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+    Meteor.call('selectADay', 'UW12', new Date().getDate(), function(err, dataResponse){
+      drawChart(dataResponse);
+    });
   }
-  var picker = new Pikaday({ field: $('#datepicker')[0] });
+  if ($('#chart_div').length > 0) {
+    if (isLoaded) {
+      drawToday();
+    } else {
+      google.setOnLoadCallback(drawToday);
+    }   
+  }
+  
+
+var drawChart = function(dataResponse) {
+  var dataArray = new Array();
+  dataArray.push(['Time of the Day', 'Number of Times Well Used']);
+  for (var i=0; i<24; i+=2){
+    dataArray.push([i +' - ' + (i+2), dataResponse[i]])
+  }
+  var data = google.visualization.arrayToDataTable(dataArray);
+  var options = {
+    title: 'Company Performance',
+    hAxis: {title: 'Year', titleTextStyle: {color: 'red'}},
+    animation:{
+      duration: 1000,
+      easing: 'out'
+    }
+  };
+  if (chart)
+  chart.draw(data, options);
+
 };
-
-
-Meteor.call('selectADay', function(dataResponse){
-})
-
-
-
-
-function drawChart() {
-	var data = google.visualization.arrayToDataTable([
-	  ['Year', 'Sales', 'Expenses'],
-	  ['2004',  1000,      400],
-	  ['2005',  1170,      460],
-	  ['2006',  660,       1120],
-	  ['2007',  1030,      540]
-	]);
-
-	var options = {
-	  title: 'Company Performance',
-	  hAxis: {title: 'Year', titleTextStyle: {color: 'red'}}
-	};
-
-	var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-	chart.draw(data, options);
+  // var picker = new Pikaday({ field: $('#datepicker')[0] });
+  var picker = new Pikaday({
+    field: $('#datepicker')[0],
+    format: 'D MMM YYYY',
+    onSelect: function() {
+      //Well ID should be var
+        Meteor.call('selectADay', 'UW12', this.getMoment().toDate(), function(err, dataResponse){
+          drawChart(dataResponse);
+      });
+  }});
+  window.drawChart = drawChart;
 }
-
-window.drawChart = drawChart;
