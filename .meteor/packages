@@ -10,3 +10,5 @@ userErrors
 coffeescript
 insecure
 moment
+stylus
+mongodb-aggregation

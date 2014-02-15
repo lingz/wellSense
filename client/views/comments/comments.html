@@ -1,0 +1,17 @@
+<template name="comments">
+  {{#each comments}}
+    <div class="comment">
+      <div>
+        {{flag}}
+      </div>
+      <div>
+        {{body}}
+      </div>
+      {{#if wasBroadcast}}
+        <div>
+          This message was broadcast to the community
+        </div>
+      {{/if}}
+    </div>
+  {{/each}}
+</template>

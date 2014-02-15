@@ -3,7 +3,9 @@
   <form name="new-well">
     <label for="name">Well Name</label>
     <input type="text" name="name">
-    <div id="new-well-map"></div>
+    {{#isolate}}
+    <div id="admin-map-canvas" class="map-canvas"></div>
+    {{/isolate}}
     <label for="shortcode">Shortcode</label>
     <input type="text" name="shortcode">
     <label for="phoneNumber">Phone Number</label>
