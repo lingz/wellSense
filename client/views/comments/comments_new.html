@@ -1,14 +1,15 @@
 <template name="commentsNew">
   <form name="new-comment">
     <textarea name="body"></textarea>
-    <select name="flag">
+    <input id='submit-button' type="submit" value="comment">
+    <input id='broadcast-label' type="checkbox" name="broadcast">
+    <div id="checkbox-label">broadcast message</div>
+    <select id="flag-selector" name="flag">
       <option value="general">General</option>
       <option value="event">Event</option>
       <option value="breakdown">Breakdown</option>
       <option value="maintenance">Maintenance</option>
       <option value="repair">Repair</option>
     </select>
-    <input type="checkbox" name="broadcast">
-    <input type="submit" value="Add comment">
   </form>
 </template>
