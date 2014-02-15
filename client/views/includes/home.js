@@ -9,7 +9,8 @@ Template.home.rendered = function() {
 };
 
 function createMainMap() {
-  mainMap = generateMap("main-map-canvas", function(marker) {
+  mainMarkers = generateMap("main-map-canvas", function(marker) {
     Meteor.Router.to("/well/" + marker.title);
-  });
+  })[1];
+  console.log(mainMarkers);
 }
