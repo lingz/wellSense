@@ -10,6 +10,8 @@ Template.graph.rendered = function() {
   }
 };
 
+
+
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
     ['Year', 'Sales', 'Expenses'],
