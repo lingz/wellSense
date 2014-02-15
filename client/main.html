@@ -1,5 +1,12 @@
 <head>
-  <title>App Title</title>
+	<title>App Title</title>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		isLoaded = false;
+		google.load("visualization", "1", {packages:["corechart"], callback: function(){
+			isLoaded = true;
+		}});
+	</script>
 </head>
 <body>
   <div class="site-wrapper">
