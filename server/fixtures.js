@@ -119,7 +119,7 @@ function seed() {
       // popularity of the well generally
       var historicalAverage = Math.floor(Math.random() * 100);
       // make a std for this type of well from the historical average
-      var stdDev = Math.random() *  historicalAverage;
+      var stdDev = Math.random() *  historicalAverage * 0.5;
       var currentTime = moment().subtract(3, "months").startOf("day");
       var now = moment();
       var offset = 0;
@@ -128,14 +128,13 @@ function seed() {
         // Multiply by the offset to get the current standard deviation
         var baseMean = historicalAverage * offsets[offset];
         var baseStdDev = stdDev * offsets[offset];
-        console.log(baseMean);
-        console.log(baseStdDev);
         // the number of wells that are to be generated in this time block
         var wellUseCount = Math.abs(rnd(baseMean, baseStdDev));
-        var endTime = currentTime.add(2, "hours").subtract(1, "minute");
+        var endTime = currentTime.clone().add(2, "hours").subtract(1, "minute");
+        console.log("Next time block");
         console.log(wellUseCount);
         // seconds difference between end and start time
-        var diff = endTime.diff(currentTime) / 1000;
+        var diff = endTime.diff(currentTime, "seconds");
         for (var reportNum = 0; reportNum < wellUseCount; reportNum++) {
           var timestamp = currentTime.clone().add(Math.random() * diff, "seconds");
           console.log(timestamp.format("dddd, MMMM Do YYYY, h:mm:ss a"));
