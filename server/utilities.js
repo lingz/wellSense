@@ -19,27 +19,34 @@ Meteor.methods({
   //start day comes in as Time() object
   selectADay: function(wellID, startDay) {
     var endDay = moment(startDay).clone().add('days', 1).toDate();
-    var todayWells = Reports.find({wellCode: wellID, timestamp: {"$gte": startDay, "$lt": endDay}}, {fields: {timestamp: 1}}).fetch();
+    var todayWells = Reports.find({wellCode: wellID, timestamp: {"$gte": startDay, "$lt": endDay}}, {fields: {timestamp: 1}, sort: {timestamp: 1}}).fetch();
     console.log(todayWells);
     //maps to an array with only timestamps
     todayWells = todayWells.map(function(report){
       return report.timestamp;
     });
+    console.log(todayWells);
     var frequency = 0;
     var frequencyDict = {};
     var dictKey = 0;
     //Start day should not have hour associated
     var startTime = moment(startDay).clone().toDate();
     var endTime = moment(startTime).clone().add('hours', 2).toDate();
-    for (var i=0; i<todayWells.length;i++){
+    
+    for (var i=0; i<todayWells.length; i++){
+      console.log(startTime);
+      console.log(endTime);
+      console.log(todayWells[i])
       if (todayWells[i] > startTime && todayWells[i] < endTime){
         frequency++;
       } else {
+        console.log(frequency);
         frequencyDict[dictKey] = frequency;
         dictKey += 2;
         frequency = 0;
         startTime = moment(startTime).add('hours', 2).toDate();
         endTime = moment(endTime).add('hours', 2).toDate();
+        i--;
       }
     }
     //push last frequency
