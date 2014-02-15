@@ -12,13 +12,14 @@ Meteor.methods({
   //start day comes in as Time() object
   selectADay: function(wellID, startDay) {
     var endDay = moment(startDay).clone().add('days', 1).toDate();
-    var todayWells = Reports.find({wellShortcode: wellID, timestamp: {"$gte": startDay, "$lt": endDay}}, {fields: {timestamp: 1}}).fetch();
+    var todayWells = Reports.find({wellCode: wellID, timestamp: {"$gte": startDay, "$lt": endDay}}, {fields: {timestamp: 1}}).fetch();
+    console.log(todayWells);
     //maps to an array with only timestamps
     todayWells = todayWells.map(function(report){
       return report.timestamp;
     });
     var frequency = 0;
-    var frequencyDict = new Object();
+    var frequencyDict = {};
     var dictKey = 0;
     //Start day should not have hour associated
     var startTime = moment(startDay).clone().toDate();
@@ -28,7 +29,7 @@ Meteor.methods({
         frequency++;
       } else {
         frequencyDict[dictKey] = frequency;
-        dictKey+= 2;
+        dictKey += 2;
         frequency = 0;
         startTime = moment(startTime).add('hours', 2).toDate();
         endTime = moment(endTime).add('hours', 2).toDate();
