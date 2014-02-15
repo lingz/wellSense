@@ -1,11 +1,16 @@
 <template name="comments">
   {{#each comments}}
     <div class="comment">
-      <div>
-        {{flag}}
+      <div class='comment-flag'>
+        <img src="{{imgSrc}}" />
       </div>
-      <div>
-        {{body}}
+      <div id='comment-container'>
+        <div class='comment-time'>
+          {{timeHeader}}
+        </div>
+        <div class='comment-body'>
+          {{body}}
+        </div>
       </div>
       {{#if wasBroadcast}}
         <div>
