@@ -24,6 +24,9 @@ window.generateMap = function(elementId, markerCallback) {
   var latestWellCode = latestReport.wellCode;
   
   var existingWells = Wells.find().fetch();
+  console.log("making the wells happen");
+  console.log(existingWells);
+  console.log(existingWells.length);
   var activeWell = Session.get("activeWell");
   for (var i = 0; i < existingWells.length; i++) {
     var selectedWell = existingWells[i];

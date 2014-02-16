@@ -35,10 +35,10 @@ Meteor.Router.add("/sms/subscribe", "GET", function() {
   var phoneNumber = this.request.query.phoneNumber;
   var msg = this.request.query.msg.toUpperCase().replace("%2B", "+");
   console.log("RECEIVING A SUBSCRIBE REQUEST FROM: " + phoneNumber);
-  if (!/^subscribe \w{4}$/i.test(msg)) 
+  var wellCode = $.trim(msg);
+  if (!/^\w{4}$/i.test(wellCode)) 
     return [200, "Sorry we could not understand your query"];
 
-  var wellCode = $.trim(msg);
   var well = Wells.findOne({shortcode: wellCode});
 
   if (!well)
@@ -80,10 +80,10 @@ Meteor.Router.add("/sms/check", "GET", function() {
   var msg = this.request.query.msg.toUpperCase().replace("%2B", "+");
   console.log("RECEIVED A CHECK REQUEST FROM " +
     phoneNumber + " for " + wellCode);
-  if (!/^check \w+/i.test(msg))
+  var wellCode = $.trim(msg);
+  if (!/^\w{4}$/i.test(wellCode))
     return [200, "Sorry, we cannot understand your query"];
 
-  var wellCode = $.trim(msg);
 
 
   var well = Wells.findOne({shortcode: wellCode});
