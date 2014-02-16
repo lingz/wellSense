@@ -54,3 +54,18 @@ Deps.autorun(function() {
     });
   }
 });
+
+// 
+Deps.autorun(function() {
+  console.log("MORE BROKEN WELLS");
+  Wells.find({"status": "broken"}).forEach(function(well) {
+      changeMarker(well.shortcode);
+  });
+});
+
+Deps.autorun(function() {
+  console.log("MORE FIXED WELLS");
+  Wells.find({"status": "working"}).forEach(function(well) {
+      changeMarker(well.shortcode);
+  });
+});

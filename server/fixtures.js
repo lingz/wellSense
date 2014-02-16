@@ -1,6 +1,7 @@
 seedPhoneNumbers = ["+971507549227", "+971563192863", "+971505968509", "+971507992693",
 "+971504826000", "+971509824554", "+971505000194", "+971509415359", "+971503244243",
 "+971503579110", "+971501162011", "+971505258746"];
+RECEIVE_NUMBER = "0563192099";
 
 // utility function for generating gaussian distributed data
 function rnd(mean, stdev) {

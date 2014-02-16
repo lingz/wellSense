@@ -21,14 +21,19 @@ Meteor.Router.add("/sms/ping", "GET", function() {
       Meteor.call("sendSMS", well.subscribers,
         well.name + " (" + well.shortcode + ") is now OK.");
       Wells.update({_id: well._id}, {"$set": {status: "working"}});
+      Comments.insert({shortcode: well.shortcode,
+        body: "WellSense has detected this well is OK now.", flag: "repair"});
     }
   } else {
     if (well.status == "working") {
       Meteor.call("sendSMS", well.subscribers,
         well.name + " (" + well.shortcode + ") is now BROKEN. Do not use.");
       Wells.update({_id: well._id}, {"$set": {status: "broken"}});
+      Comments.insert({shortcode: well.shortcode,
+        body: "WellSense has detected this well broken.", flag: "breakdown"});
     }
   }
+  return [200, "RECIEVED"];
 });
 
 Meteor.Router.add("/sms/subscribe", "GET", function() {
@@ -53,6 +58,9 @@ Meteor.Router.add("/sms/subscribe", "GET", function() {
 var URL = "http://wellsense.ngrok.com/";
 Meteor.methods({
   "sendSMS": function(recipients, message) {
+    console.log("SENDING SMS");
+    console.log(recipients);
+    console.log(message);
     this.unblock();
     for (var i=0; i < recipients.length; i ++) {
       var phoneNumber = recipients[i];
@@ -98,7 +106,7 @@ Meteor.Router.add("/sms/check", "GET", function() {
 
   if (well.status == "working")
     return [200, well.name + " (" + wellCode + ")" +
-      " is working. It was last used on " +  moment().format('DD/MM HH:SS')];
+      " is working. It was last used on " +  moment().format('DD/MM HH:mm')];
   else
     return [200, well.name + " (" + wellCode + ") is not working."];
     

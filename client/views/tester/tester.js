@@ -16,6 +16,10 @@ Template.tester.events({
     var well = Wells.findOne({shortcode: shortcode});
     if (well.status == "broken") {
       Wells.update({_id: well._id}, {"$set": {status: "working"}});
+      Meteor.call("sendSMS", well.subscribers,
+        well.name + " (" + well.shortcode + ") is now OK.");
+      Comments.insert({shortcode: well.shortcode,
+        body: "WellSense has detected this well is OK now.", flag: "repair"});
     }
   },
   "click .off": function(e) {
@@ -25,6 +29,10 @@ Template.tester.events({
     var well = Wells.findOne({shortcode: shortcode});
     if (well.status != "broken") {
       Wells.update({_id: well._id}, {"$set": {status: "broken"}});
+      Meteor.call("sendSMS", well.subscribers,
+        well.name + " (" + well.shortcode + ") is now BROKEN. Do not use.");
+      Comments.insert({shortcode: well.shortcode,
+        body: "WellSense has detected this well broken.", flag: "breakdown"});
     }
   }
 });

@@ -85,13 +85,17 @@ window.changeMarker = function(wellCode, isActive) {
       marker.setIcon(MARKERS.broken);
     } else if (well.shortcode == activeWell) {
       marker.setIcon(MARKERS.selected);
-      if (mainMarkers.active && mainMarkers.active != well.shortcode)
+      if (mainMarkers.active && mainMarkers.active != well.shortcode) {
+        console.log("recursing1");
         changeMarker(mainMarkers.active);
+      }
       mainMarkers.active = wellCode;
     } else if (well.shortcode == latestWellCode) {
       marker.setIcon(MARKERS.latest);
-      if (mainMarkers.latest != well.shortcode)
+      if (mainMarkers.latest != well.shortcode) {
+        console.log("recursing2");
         changeMarker(mainMarkers.latest);
+      }
       mainMarkers.latest = wellCode;
     } else {
       marker.setIcon(MARKERS.normal);
