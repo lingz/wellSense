@@ -1,4 +1,4 @@
-Meteor.subscribe("wells");
+wellHandler = Meteor.subscribe("wells");
 reportHandler = Meteor.subscribe("latestReport");
 Deps.autorun(function() {
   var wellcode = Session.get("activeWell");

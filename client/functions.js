@@ -65,7 +65,7 @@ window.generateMap = function(elementId, markerCallback) {
   }
   if (activeWell) result.markers.active = activeWell;
   if (latestWellCode) result.markers.latest = latestWellCode;
-  element.addClass("rendered");
+  if (wellHandler.ready()) element.addClass("rendered");
   result.map = map;
   return result;
 };
@@ -82,7 +82,7 @@ window.changeMarker = function(wellCode, isActive) {
       marker.setIcon(MARKERS.broken);
     } else if (well.shortcode == activeWell) {
       marker.setIcon(MARKERS.selected);
-      if (mainMarkers.active != well.shortcode)
+      if (mainMarkers.active && mainMarkers.active != well.shortcode)
         changeMarker(mainMarkers.active);
       mainMarkers.active = wellCode;
     } else if (well.shortcode == latestWellCode) {

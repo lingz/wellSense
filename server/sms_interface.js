@@ -1,7 +1,7 @@
 Meteor.Router.add("/sms/ping", "GET", function() {
   var phoneNumber = this.request.query.phoneNumber;
   var timestamp = new Date();
-  var msg = this.request.query.msg.toUpperCase();
+  var msg = this.request.query.msg.toUpperCase().replace("%2B", "+");
   console.log("RECEIVED A PING FROM: " + phoneNumber);
 
   // transform the number
@@ -33,7 +33,7 @@ Meteor.Router.add("/sms/ping", "GET", function() {
 
 Meteor.Router.add("/sms/subscribe", "GET", function() {
   var phoneNumber = this.request.query.phoneNumber;
-  var msg = this.request.query.msg.toUpperCase();
+  var msg = this.request.query.msg.toUpperCase().replace("%2B", "+");
   console.log("RECEIVING A SUBSCRIBE REQUEST FROM: " + phoneNumber);
   if (!/^subscribe \w{4}$/i.test(msg)) 
     return [200, "Sorry we could not understand your query"];
@@ -77,14 +77,14 @@ Meteor.methods({
 
 Meteor.Router.add("/sms/check", "GET", function() {
   var phoneNumber = this.request.query.phoneNumber;
-  var msg = this.request.query.msg.toUpperCase();
+  var msg = this.request.query.msg.toUpperCase().replace("%2B", "+");
+  console.log("RECEIVED A CHECK REQUEST FROM " +
+    phoneNumber + " for " + wellCode);
   if (!/^check \w+/i.test(msg))
     return [200, "Sorry, we cannot understand your query"];
 
   var wellCode = msg.split(" ")[1];
 
-  console.log("RECEIVED A CHECK REQUEST FROM " +
-    phoneNumber + " for " + wellCode);
 
   var well = Wells.findOne({shortcode: wellCode});
 

@@ -12,10 +12,12 @@ Session.setDefault("wellsLoaded", false);
 window.mainMarkers = null;
 window.changeMarker = null;
 function createMainMap() {
-  if (Wells.find().count() > 0 && !Session.get("wellsLoaded")) {
+  if (wellHandler.ready() && !Session.get("wellsLoaded")) {
+    console.log("Starting the main draw");
+    console.log(Wells.find().fetch());
     result = generateMap("main-map-canvas", function(marker) {
       Meteor.Router.to("/well/" + marker.title);
-      changeMarker(marker.title, true);
+      changeMarker(marker.title);
     });
     if (result) mainMarkers = result.markers;
     Session.set("wellsLoaded", true);
@@ -27,6 +29,7 @@ Session.setDefault("waitingOnLoad", false);
 function waitForMap() {
   Session.set("waitingOnLoad", true);
   Deps.autorun(function() {
+    console.log("trying to redraw the map");
     Wells.find();
     createMainMap();
   });
@@ -45,7 +48,7 @@ Deps.autorun(function() {
 
 // on well change, redo all wells
 Deps.autorun(function() {
-  if (changeMarker) {
+  if (window.changeMarker) {
     Wells.find({}).forEach(function(well) {
       changeMarker(well.shortcode);
     });
