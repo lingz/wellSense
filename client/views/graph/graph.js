@@ -54,7 +54,7 @@ function setupFunctions() {
     var options = {
       title: 'Well Frequency per Day',
       legend: {position: 'none'},
-      hAxis: {title: 'Hour', titleTextStyle: {color: 'black'}},
+      hAxis: {title: 'Hour', titleTextStyle: {color: 'black'}, baselineColor: '#A0A0A0'},
       animation:{
         duration: 1000,
         easing: 'out'
