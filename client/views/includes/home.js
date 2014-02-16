@@ -8,15 +8,34 @@ Template.home.rendered = function() {
   }
 };
 
+Session.setDefault("wellsLoaded", false);
 window.mainMarkers = null;
 window.changeMarker = null;
 function createMainMap() {
-  result = generateMap("main-map-canvas", function(marker) {
-    Meteor.Router.to("/well/" + marker.title);
-    changeMarker(marker.title, true);
-  });
-  if (result) mainMarkers = result.markers;
+  if (wellHandler.ready() && !Session.get("wellsLoaded")) {
+    console.log("Starting the main draw");
+    console.log(Wells.find().fetch());
+    result = generateMap("main-map-canvas", function(marker) {
+      Meteor.Router.to("/well/" + marker.title);
+      changeMarker(marker.title);
+    });
+    if (result) mainMarkers = result.markers;
+    Session.set("wellsLoaded", true);
+  } else if (!Session.get("waitingOnLoad")) {
+    waitForMap();
+  }
 }
+Session.setDefault("waitingOnLoad", false);
+function waitForMap() {
+  Session.set("waitingOnLoad", true);
+  Deps.autorun(function() {
+    console.log("trying to redraw the map");
+    Wells.find();
+    createMainMap();
+  });
+}
+
+
 Deps.autorun(function() {
   var latestReport = Reports.findOne({}, {sort: {timestamp: -1}});
   if (latestReport) {
@@ -29,9 +48,9 @@ Deps.autorun(function() {
 
 // on well change, redo all wells
 Deps.autorun(function() {
-  if (changeMarker) {
+  if (window.changeMarker) {
     Wells.find({}).forEach(function(well) {
-      changeMarker(well);
+      changeMarker(well.shortcode);
     });
   }
 });
