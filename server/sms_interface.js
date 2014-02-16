@@ -1,7 +1,7 @@
 Meteor.Router.add("/sms/ping", "GET", function() {
   var phoneNumber = this.request.query.phoneNumber;
   var timestamp = new Date();
-  var msg = this.request.query.msg;
+  var msg = this.request.query.msg.toUpperCase();
   console.log("RECEIVED A PING FROM: " + phoneNumber);
 
   // transform the number
@@ -33,8 +33,9 @@ Meteor.Router.add("/sms/ping", "GET", function() {
 
 Meteor.Router.add("/sms/subscribe", "GET", function() {
   var phoneNumber = this.request.query.phoneNumber;
-  var msg = this.request.query.msg;
-  if (!/^subscribe  \w{4}$/.test(msg)) 
+  var msg = this.request.query.msg.toUpperCase();
+  console.log("RECEIVING A SUBSCRIBE REQUEST FROM: " + phoneNumber);
+  if (!/^subscribe \w{4}$/i.test(msg)) 
     return [200, "Sorry we could not understand your query"];
 
   var wellCode = msg.split(" ")[1];
@@ -43,7 +44,7 @@ Meteor.Router.add("/sms/subscribe", "GET", function() {
   if (!well)
     return [200, "Sorry, no well with code " + wellCode + " exists."];
 
-  Wells.update({_id: well._id}, {"$addToSet": {phoneNumber: phoneNumber}});
+  Wells.update({_id: well._id}, {"$addToSet": {subscribers: phoneNumber}});
   return [200,
    "Congratulations. You have been successfully subscribed to " +
    well.name + " (" +well.shortcode + ")." ];
@@ -75,6 +76,31 @@ Meteor.methods({
 });
 
 Meteor.Router.add("/sms/check", "GET", function() {
-  
+  var phoneNumber = this.request.query.phoneNumber;
+  var msg = this.request.query.msg.toUpperCase();
+  if (!/^check \w+/i.test(msg))
+    return [200, "Sorry, we cannot understand your query"];
+
+  var wellCode = msg.split(" ")[1];
+
+  console.log("RECEIVED A CHECK REQUEST FROM " +
+    phoneNumber + " for " + wellCode);
+
+  var well = Wells.findOne({shortcode: wellCode});
+
+  if (!well)
+    return [200, "The well with code " + wellCode + " does not exist."];
+
+  var lastReport = Reports.findOne({wellCode: well.shortcode},
+    {sort: {timestamp: -1}});
+  if (!lastReport)
+    return [200, "The well with code " + wellCode + " has never been used."];
+
+  if (well.status == "working")
+    return [200, "The well with code " + wellCode +
+      " is working. It was last used on " +  moment().format('DD/MM HH:SS')];
+  else
+    return [200, "The well with code " + wellCode + " is not working."];
+    
 });
 

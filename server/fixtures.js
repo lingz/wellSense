@@ -1,6 +1,6 @@
-seedPhoneNumbers = [971507549227, 971508982573, 971505968509, 971507992693,
-971504826000, 971509824554, 971505000194, 971509415359, 971503244243,
-971503579110, 971501162011, 971505258746];
+seedPhoneNumbers = ["+971507549227", "+971563192863", "+971505968509", "+971507992693",
+"+971504826000", "+971509824554", "+971505000194", "+971509415359", "+971503244243",
+"+971503579110", "+971501162011", "+971505258746"];
 
 // utility function for generating gaussian distributed data
 function rnd(mean, stdev) {
@@ -17,90 +17,90 @@ function seed() {
         shortcode: "UW12",
         lng: 44.055991,
         lat: 13.565088,
-        ph: "+971563192099"
+        phoneNumber: "+971563192099"
       },
       {
         name: "Old City Well",
         shortcode: "OC31",
         lng: 44.059875,
         lat: 13.567424,
-        ph: seedPhoneNumbers[1]
+        phoneNumber: seedPhoneNumbers[1]
       },
       {
         name: "Park Well",
         shortcode: "PW10",
         lng: 44.064918,
         lat: 13.566799,
-        ph: seedPhoneNumbers[2]
+        phoneNumber: seedPhoneNumbers[2]
       },
       {
         name: "Digital Well",
         shortcode: "DW63",
         lng: 44.064617,
         lat: 13.561354,
-        ph: seedPhoneNumbers[3]
+        phoneNumber: seedPhoneNumbers[3]
       },
       {
         name: "Outskirt Well",
         shortcode: "OW19",
         lng: 44.056377,
         lat: 13.559435,
-        ph: seedPhoneNumbers[3]
+        phoneNumber: seedPhoneNumbers[3]
       },
       {
         name: "Dog Well",
         shortcode: "DW13",
         lng: 44.060304,
         lat: 13.563378,
-        ph: seedPhoneNumbers[4]
+        phoneNumber: seedPhoneNumbers[4]
       },
       {
         name: "Falcon Well",
         shortcode: "FW73",
         lng: 44.060905,
         lat: 13.560291,
-        ph: seedPhoneNumbers[5]
+        phoneNumber: seedPhoneNumbers[5]
       },
       {
         name: "Spinner's Well",
         shortcode: "SW26",
         lng: 44.059145,
         lat: 13.556306,
-        ph: seedPhoneNumbers[6]
+        phoneNumber: seedPhoneNumbers[6]
       },
       {
         name: "Sheraton Well",
         shortcode: "SW42",
         lng: 44.067450,
         lat: 13.557016,
-        ph: seedPhoneNumbers[7]
+        phoneNumber: seedPhoneNumbers[7]
       },
       {
         name: "Movenpick Well",
         shortcode: "MW15",
         lng: 44.063823,
         lat: 13.558851,
-        ph: seedPhoneNumbers[8] },
+        phoneNumber: seedPhoneNumbers[8] },
       {
         name: "Education Well",
         shortcode: "EW74",
         lng: 44.063888,
         lat: 13.562648,
-        ph: seedPhoneNumbers[9]
+        phoneNumber: seedPhoneNumbers[9]
       },
       {
         name: "Electric Well",
         shortcode: "EW31",
         lng: 44.060240,
         lat: 13.564108,
-        ph: seedPhoneNumbers[10]
+        phoneNumber: seedPhoneNumbers[10]
       },
       {
         name: "Airway Well",
         shortcode: "AW92",
         lng: 44.065347,
         lat: 13.563461,
-        ph: seedPhoneNumbers[11]
+        phoneNumber: seedPhoneNumbers[11]
       }
     ];
     for (var i=0; i< demoWells.length; i++) {
