@@ -5,7 +5,7 @@ Template.tester.helpers({
 });
 
 Template.tester.events({
-  "click button": function(e) {
+  "click .on": function(e) {
     e.preventDefault();
     var element = $(e.target);
     var shortcode = element.val();
@@ -13,5 +13,18 @@ Template.tester.events({
       timestamp: new Date(),
       wellCode: shortcode
     });
+    var well = Wells.findOne({shortcode: shortcode});
+    if (well.status == "broken") {
+      Wells.update({_id: well._id}, {"$set": {status: "working"}});
+    }
+  },
+  "click .off": function(e) {
+    e.preventDefault();
+    var element = $(e.target);
+    var shortcode = element.val();
+    var well = Wells.findOne({shortcode: shortcode});
+    if (well.status != "broken") {
+      Wells.update({_id: well._id}, {"$set": {status: "broken"}});
+    }
   }
 });
