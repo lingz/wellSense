@@ -38,7 +38,7 @@ Meteor.Router.add("/sms/subscribe", "GET", function() {
   if (!/^subscribe \w{4}$/i.test(msg)) 
     return [200, "Sorry we could not understand your query"];
 
-  var wellCode = msg.split(" ")[1];
+  var wellCode = $.trim(msg);
   var well = Wells.findOne({shortcode: wellCode});
 
   if (!well)
@@ -83,7 +83,7 @@ Meteor.Router.add("/sms/check", "GET", function() {
   if (!/^check \w+/i.test(msg))
     return [200, "Sorry, we cannot understand your query"];
 
-  var wellCode = msg.split(" ")[1];
+  var wellCode = $.trim(msg);
 
 
   var well = Wells.findOne({shortcode: wellCode});
