@@ -7,11 +7,11 @@ Template.comments.helpers({
   },
   imgSrc: function() {
   	switch (this.flag){
-	  	case "general":
+	  	case "General":
 	  		return "/icon-general.png"
 	  	case "event":
 	  		return "/icon-event.png"
-	  	case "breakdown":
+	  	case "Breakdown":
 	  		return "/icon-breakdown.png"
 	  	case "maintenance":
 	  		return "/icon-maintenance.png"

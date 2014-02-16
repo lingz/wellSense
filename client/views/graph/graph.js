@@ -46,14 +46,15 @@ Template.graph.rendered = function() {
 function setupFunctions() {
   var drawChart = function(dataResponse) {
     var dataArray = [];
-    dataArray.push(['Time of the Day', 'Number of Times Well Used']);
+    dataArray.push(['Time of the Day', 'Well Frequency', {role: 'style'}]);
     for (var i=0; i<24; i+=2){
-      dataArray.push([i +' - ' + (i+2), dataResponse[i]]);
+      dataArray.push([i +' - ' + (i+2), dataResponse[i], '#BEDCF7']);
     }
     var data = google.visualization.arrayToDataTable(dataArray);
     var options = {
-      title: 'Company Performance',
-      hAxis: {title: 'Year', titleTextStyle: {color: 'red'}},
+      title: 'Well Frequency per Day',
+      legend: {position: 'none'},
+      hAxis: {title: 'Hour', titleTextStyle: {color: 'black'}, baselineColor: '#A0A0A0'},
       animation:{
         duration: 1000,
         easing: 'out'

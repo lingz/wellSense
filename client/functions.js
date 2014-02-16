@@ -1,8 +1,8 @@
 MARKERS = {
-  broken: "http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png",
-  selected: "http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png",
-  latest: "http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png",
-  normal: "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png"
+  broken: "/pin-breakdown.png",
+  selected: "/pin-clicked.png",
+  latest: "/pin-recent.png",
+  normal: "/pin-standard.png"
 };
 window.generateMap = function(elementId, markerCallback) {
   var element = $("#" + elementId);
