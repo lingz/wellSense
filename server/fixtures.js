@@ -17,7 +17,7 @@ function seed() {
         shortcode: "UW12",
         lng: 44.055991,
         lat: 13.565088,
-        phoneNumber: "+971563192099"
+        phoneNumber: "+971563192122"
       },
       {
         name: "Old City Well",

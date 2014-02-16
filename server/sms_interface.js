@@ -97,10 +97,10 @@ Meteor.Router.add("/sms/check", "GET", function() {
     return [200, "The well with code " + wellCode + " has never been used."];
 
   if (well.status == "working")
-    return [200, "The well with code " + wellCode +
+    return [200, well.name + " (" + wellCode + ")" +
       " is working. It was last used on " +  moment().format('DD/MM HH:SS')];
   else
-    return [200, "The well with code " + wellCode + " is not working."];
+    return [200, well.name + " (" + wellCode + ") is not working."];
     
 });
 
