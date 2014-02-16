@@ -35,7 +35,7 @@ Meteor.Router.add("/sms/subscribe", "GET", function() {
   var phoneNumber = this.request.query.phoneNumber;
   var msg = this.request.query.msg.toUpperCase().replace("%2B", "+");
   console.log("RECEIVING A SUBSCRIBE REQUEST FROM: " + phoneNumber);
-  var wellCode = $.trim(msg);
+  var wellCode = msg.trim();
   if (!/^\w{4}$/i.test(wellCode)) 
     return [200, "Sorry we could not understand your query"];
 
@@ -80,7 +80,7 @@ Meteor.Router.add("/sms/check", "GET", function() {
   var msg = this.request.query.msg.toUpperCase().replace("%2B", "+");
   console.log("RECEIVED A CHECK REQUEST FROM " +
     phoneNumber + " for " + wellCode);
-  var wellCode = $.trim(msg);
+  var wellCode = msg.trim();
   if (!/^\w{4}$/i.test(wellCode))
     return [200, "Sorry, we cannot understand your query"];
 
